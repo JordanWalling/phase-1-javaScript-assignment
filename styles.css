@@ -9,12 +9,14 @@ body {
   font-family: "Roboto", sans-serif;
 }
 
+/* ====== NAVBAR  ========= */
 nav {
   height: 35px;
   background-color: #fff;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  margin-bottom: 10px;
 }
 
 .search-container {
@@ -58,11 +60,14 @@ nav {
   border-radius: 5px;
 }
 
+/* ====== END OF NAVBAR ========== */
+/* ====== START OF PRODUCT LIST ======= */
+
 #list {
   display: grid;
   grid-template-columns: repeat(auto-fit, 1fr);
   place-items: center;
-  gap: 5px;
+  gap: 10px;
 }
 
 .card {
@@ -129,16 +134,45 @@ img {
   background-color: hsl(236, 85%, 95%);
 }
 
+/* ====== END OF PRODUCT LIST ======= */
+
 @media screen and (min-width: 730px) {
   #list {
     display: grid;
     grid-template-columns: repeat(2, 1fr);
+  }
+  #search-input {
+    max-width: 300px;
+  }
+  .fa-magnifying-glass {
+    position: absolute;
+    top: 24%;
+    left: 80%;
+    font-size: 12px;
+    color: hsl(0, 0%, 60%);
   }
 }
 @media screen and (min-width: 1000px) {
   #list {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
+  }
+  .fa-magnifying-glass {
+    position: absolute;
+    top: 24%;
+    left: 75%;
+  }
+}
+
+@media screen and (min-width: 1200px) {
+  .fa-magnifying-glass {
+    position: absolute;
+    left: 70%;
+  }
+}
+@media screen and (min-width: 1300px) {
+  .fa-magnifying-glass {
+    left: 68%;
   }
 }
 
