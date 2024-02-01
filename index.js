@@ -25,7 +25,7 @@ function displayProducts(products) {
     </div>
     <div class="card-content">
       <p class="card-price">$${Math.round(price)}</p>
-      <h4 class="card-title">${title.substring(0, 40)}...</h4>
+      <h4 class="card-title">${title.substring(0, 45)}...</h4>
       <p class="card-desc">
         ${category.toUpperCase()}
       </p> 
