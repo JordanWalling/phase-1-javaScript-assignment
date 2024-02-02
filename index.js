@@ -2,6 +2,47 @@ document.addEventListener("DOMContentLoaded", initialise);
 let allProducts;
 function initialise() {
   fetchProducts();
+  filterCategories();
+  searchProduct();
+}
+
+async function fetchProducts() {
+  const resp = await fetch("https://fakestoreapi.com/products");
+  const data = await resp.json();
+  allProducts = data;
+  displayProducts(allProducts);
+}
+
+function displayProducts(products) {
+  const list = document.querySelector("#list");
+  products
+    .map((product) => {
+      // console.log(product);
+      const { image, category, price, title } = product;
+      const li = document.createElement("li");
+      li.classList.add("card");
+      li.innerHTML = `
+
+    <div class="img-content">
+      <img src=${image} alt=${category} />
+    </div>
+    <div class="card-content">
+      <p class="card-price">$${Math.round(price)}</p>
+      <h4 class="card-title">${title.substring(0, 45)}...</h4>
+      <p class="card-desc">
+        ${category.toUpperCase()}
+      </p> 
+      <div class="btn-container">
+       <button class="card-btn hide">Add to Cart</button>
+      </div>
+
+    `;
+      list.appendChild(li);
+    })
+    .join("");
+}
+
+function filterCategories() {
   // 1 - select the select element
   const select = document.querySelector("#filter-btn");
   // 2 - add onchange event listener
@@ -48,57 +89,58 @@ function initialise() {
       const li = document.createElement("li");
       li.classList.add("card");
       li.innerHTML = `
-     <div class="img-content">
-     <img src=${image} alt=${category} />
-     </div>
-     <div class="card-content">
-     <p class="card-price">$${Math.round(price)}</p>
-     <h4 class="card-title">${title.substring(0, 45)}...</h4>
-     <p class="card-desc">
-     ${category.toUpperCase()}
-     </p> 
-     <div class="btn-container">
-     <button class="card-btn hide">Add to Cart</button>
-     </div>
-     `;
+         <div class="img-content">
+         <img src=${image} alt=${category} />
+         </div>
+         <div class="card-content">
+         <p class="card-price">$${Math.round(price)}</p>
+         <h4 class="card-title">${title.substring(0, 45)}...</h4>
+         <p class="card-desc">
+         ${category.toUpperCase()}
+         </p> 
+         <div class="btn-container">
+         <button class="card-btn hide">Add to Cart</button>
+         </div>
+         `;
       // 5 - append to #list
       list.appendChild(li);
     });
   }
 }
 
-async function fetchProducts() {
-  const resp = await fetch("https://fakestoreapi.com/products");
-  const data = await resp.json();
-  allProducts = data;
-  displayProducts(allProducts);
-}
-
-function displayProducts(products) {
+function searchProduct() {
+  // 1. Select element
+  const searchInput = document.querySelector("#search-input");
   const list = document.querySelector("#list");
-  products
-    .map((product) => {
-      // console.log(product);
-      const { image, category, price, title } = product;
+  // 2. add event listener
+  searchInput.addEventListener("keyup", (e) => {
+    list.innerHTML = "";
+    // 3. get value from input
+    let searchTerm = e.target.value;
+    // 4. filter products array and return filtered products
+    let content = allProducts.filter((product) => {
+      return product.title.toLowerCase().includes(searchTerm);
+    });
+    content.map((product) => {
+      const { image, price, category, title } = product;
       const li = document.createElement("li");
       li.classList.add("card");
       li.innerHTML = `
-
-    <div class="img-content">
-      <img src=${image} alt=${category} />
-    </div>
-    <div class="card-content">
-      <p class="card-price">$${Math.round(price)}</p>
-      <h4 class="card-title">${title.substring(0, 45)}...</h4>
-      <p class="card-desc">
+        <div class="img-content">
+        <img src=${image} alt=${category} />
+        </div>
+        <div class="card-content">
+        <p class="card-price">$${Math.round(price)}</p>
+        <h4 class="card-title">${title.substring(0, 45)}...</h4>
+        <p class="card-desc">
         ${category.toUpperCase()}
-      </p> 
-      <div class="btn-container">
-       <button class="card-btn hide">Add to Cart</button>
-      </div>
-
-    `;
+        </p> 
+        <div class="btn-container">
+        <button class="card-btn hide">Add to Cart</button>
+        </div>
+        `;
+      // 5 - append to #list
       list.appendChild(li);
-    })
-    .join("");
+    });
+  });
 }
