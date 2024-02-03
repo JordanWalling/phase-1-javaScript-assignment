@@ -62,6 +62,15 @@ nav {
   border-radius: 5px;
 }
 
+.scrolled {
+  background-color: hsl(0, 0%, 90%);
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  z-index: 999;
+}
+
 /* ====== END OF NAVBAR ========== */
 /* ====== START OF PRODUCT LIST ======= */
 
@@ -181,9 +190,10 @@ img {
 } */
 
 /* hide class  */
-/* .hide {
- display: none;
-} */
+.hide {
+  /* display: hidden; */
+  display: none;
+}
 
 /* add class when moueover - js */
 /* .card:hover .hide {
