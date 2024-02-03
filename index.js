@@ -116,6 +116,18 @@ function filterCategories() {
          <button class="card-btn hide">Add to Cart</button>
          </div>
          `;
+      li.addEventListener("mouseenter", (e) => {
+        let cardContent = e.target.children[1];
+        const btnContainer = cardContent.children[3];
+        const btn = btnContainer.children[0];
+        btn.classList.remove("hide");
+      });
+      li.addEventListener("mouseleave", (e) => {
+        let cardContent = e.target.children[1];
+        const btnContainer = cardContent.children[3];
+        const btn = btnContainer.children[0];
+        btn.classList.add("hide");
+      });
       // 5 - append to #list
       list.appendChild(li);
     });
@@ -153,6 +165,18 @@ function searchProduct() {
         <button class="card-btn hide">Add to Cart</button>
         </div>
         `;
+      li.addEventListener("mouseenter", (e) => {
+        let cardContent = e.target.children[1];
+        const btnContainer = cardContent.children[3];
+        const btn = btnContainer.children[0];
+        btn.classList.remove("hide");
+      });
+      li.addEventListener("mouseleave", (e) => {
+        let cardContent = e.target.children[1];
+        const btnContainer = cardContent.children[3];
+        const btn = btnContainer.children[0];
+        btn.classList.add("hide");
+      });
       // 5 - append to #list
       list.appendChild(li);
     });
