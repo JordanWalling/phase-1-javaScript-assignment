@@ -198,13 +198,22 @@ function navScroll() {
 
 function openCart() {
   const cartBtn = document.querySelector(".cart-container");
-  const cartModal = document.querySelector(".modal");
+
   cartBtn.addEventListener("click", () => {
-    const cartModal = document.querySelector(".modal");
-    cartModal.classList.remove("hide");
+    seeModal();
   });
   const closeBtn = document.querySelector(".close");
   closeBtn.addEventListener("click", () => {
-    cartModal.classList.add("hide");
+    closeModal();
   });
+}
+
+function closeModal() {
+  const cartModal = document.querySelector(".modal");
+  cartModal.classList.add("hide");
+}
+
+function seeModal() {
+  const cartModal = document.querySelector(".modal");
+  cartModal.classList.remove("hide");
 }
