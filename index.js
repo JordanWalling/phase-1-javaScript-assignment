@@ -216,4 +216,8 @@ function closeModal() {
 function seeModal() {
   const cartModal = document.querySelector(".modal");
   cartModal.classList.remove("hide");
+  if (!cartModal.classList.contains("hide")) {
+    const modalOverlay = document.querySelector(".modal");
+    modalOverlay.addEventListener("click", closeModal);
+  }
 }
