@@ -5,6 +5,7 @@ function initialise() {
   filterCategories();
   searchProduct();
   navScroll();
+  openCart();
 }
 
 async function fetchProducts() {
@@ -192,5 +193,18 @@ function navScroll() {
     } else {
       nav.classList.remove("scrolled");
     }
+  });
+}
+
+function openCart() {
+  const cartBtn = document.querySelector(".cart-container");
+  const cartModal = document.querySelector(".modal");
+  cartBtn.addEventListener("click", () => {
+    const cartModal = document.querySelector(".modal");
+    cartModal.classList.remove("hide");
+  });
+  const closeBtn = document.querySelector(".close");
+  closeBtn.addEventListener("click", () => {
+    cartModal.classList.add("hide");
   });
 }
