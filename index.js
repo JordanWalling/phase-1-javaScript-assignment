@@ -30,7 +30,7 @@ function displayProducts(products) {
     <div class="card-content">
       <p class="card-price">$${Math.round(price)}</p>
       <h4 class="card-title">${title.substring(0, 45)}...</h4>
-      <p class="card-desc">
+      <p class="card-desc hide">
         ${category.toUpperCase()}
       </p> 
       <div class="btn-container">
@@ -109,7 +109,7 @@ function filterCategories() {
          <div class="card-content">
          <p class="card-price">$${Math.round(price)}</p>
          <h4 class="card-title">${title.substring(0, 45)}...</h4>
-         <p class="card-desc">
+         <p class="card-desc hide">
          ${category.toUpperCase()}
          </p> 
          <div class="btn-container">
@@ -146,7 +146,7 @@ function searchProduct() {
         <div class="card-content">
         <p class="card-price">$${Math.round(price)}</p>
         <h4 class="card-title">${title.substring(0, 45)}...</h4>
-        <p class="card-desc">
+        <p class="card-desc hide">
         ${category.toUpperCase()}
         </p> 
         <div class="btn-container">
