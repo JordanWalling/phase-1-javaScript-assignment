@@ -170,6 +170,26 @@ img {
 }
 
 /* ====== END OF PRODUCT LIST ======= */
+/* ====== START OF CART MODAL ======= */
+#cart-modal {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: hsl(0, 0%, 40%);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  width: 50%;
+  height: 50%;
+  background-color: #fff;
+}
+
+/* ====== END OF CART MODAL ======= */
 
 @media screen and (min-width: 560px) {
   #list {
