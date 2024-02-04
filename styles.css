@@ -172,7 +172,7 @@ img {
 /* ====== END OF PRODUCT LIST ======= */
 /* ====== START OF CART MODAL ======= */
 .modal {
-  position: absolute;
+  position: fixed;
   top: 0;
   left: 0;
   right: 0;
@@ -181,16 +181,47 @@ img {
   display: flex;
   justify-content: center;
   align-items: center;
+  z-index: 999;
 }
 
 .modal-content {
-  width: 50%;
-  height: 50%;
+  width: 80%;
+  min-height: 50%;
+  max-height: 80%;
+  overflow-y: auto;
   background-color: #fff;
+  position: relative;
+  padding: 5px;
 }
 
+.modal-content h2 {
+  text-align: center;
+  font-size: 26px;
+  margin: 20px auto;
+}
+
+.modal-content span {
+  position: absolute;
+  top: 0;
+  left: 95%;
+}
 body.modal-open {
   overflow: hidden;
+}
+
+div.item-container {
+  position: relative;
+  margin-bottom: 5px;
+}
+div.item-container h3 {
+  font-size: 18px;
+  margin-bottom: 2px;
+}
+
+div.item-container button {
+  position: absolute;
+  top: 0;
+  left: 95%;
 }
 
 /* ====== END OF CART MODAL ======= */

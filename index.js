@@ -254,18 +254,32 @@ function displayCartItems() {
   const cartList = document.querySelector("#cart-list");
 
   cartList.innerHTML = "";
-  cart.map((item) => {
+  cart.map((item, index) => {
     const { price, title } = item;
     const li = document.createElement("li");
     const h3 = document.createElement("h3");
     const p = document.createElement("p");
+    const p1 = document.createElement("p");
+    const btn = document.createElement("button");
+    const div = document.createElement("div");
+    div.classList.add("item-container");
 
+    p1.textContent = index + 1;
     h3.textContent = title;
     p.textContent = price;
+    btn.textContent = "X";
+    btn.addEventListener("click", (e) => {
+      // stopPropagation prevents modal from closing
+      e.stopPropagation();
+      cart.splice(index, 1);
 
-    li.appendChild(h3);
-    li.appendChild(p);
-
+      displayCartItems();
+    });
+    div.appendChild(p1);
+    div.appendChild(h3);
+    div.appendChild(p);
+    div.appendChild(btn);
+    li.appendChild(div);
     cartList.appendChild(li);
   });
 }
