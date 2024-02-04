@@ -8,6 +8,7 @@ function initialise() {
   navScroll();
   openCart();
   onCardButtonClick();
+  displayCartItems();
 }
 
 async function fetchProducts() {
@@ -230,16 +231,36 @@ function onCardButtonClick() {
   list.addEventListener("click", (e) => {
     if (e.target.className === "card-btn") {
       const cardContent = e.target.parentElement.parentElement;
-      const cardPrice = cardContent.children[0].innerHTML;
-      const cardTitle = cardContent.children[1].innerHTML;
-      let li = document.createElement("li");
-      li.innerHTML = `
-       <h3>${cardTitle}</h3>
-       <p>${cardPrice}</p>
-      `;
-      cart.push(li);
+
+      const cardPrice = cardContent.querySelector(".card-price").textContent;
+      const cardTitle = cardContent.querySelector(".card-title").textContent;
+
+      cart.push({ title: cardTitle, price: cardPrice });
       e.target.setAttribute("disabled", "disabled");
+      e.target.style.backgroundColor = "grey";
+      e.target.style.color = "white";
       console.log(cart);
+      displayCartItems();
     }
+  });
+}
+
+function displayCartItems() {
+  const cartList = document.querySelector("#cart-list");
+
+  cartList.innerHTML = "";
+  cart.map((item) => {
+    const { price, title } = item;
+    const li = document.createElement("li");
+    const h3 = document.createElement("h3");
+    const p = document.createElement("p");
+
+    h3.textContent = title;
+    p.textContent = price;
+
+    li.appendChild(h3);
+    li.appendChild(p);
+
+    cartList.appendChild(li);
   });
 }
