@@ -1,11 +1,13 @@
 document.addEventListener("DOMContentLoaded", initialise);
 let allProducts;
+let cart = [];
 function initialise() {
   fetchProducts();
   filterCategories();
   searchProduct();
   navScroll();
   openCart();
+  onCardButtonClick();
 }
 
 async function fetchProducts() {
@@ -43,6 +45,7 @@ function displayProducts(products) {
         let cardContent = e.target.children[1];
         const btnContainer = cardContent.children[3];
         const btn = btnContainer.children[0];
+
         btn.classList.remove("hide");
       });
       li.addEventListener("mouseleave", (e) => {
@@ -220,4 +223,23 @@ function seeModal() {
     const modalOverlay = document.querySelector(".modal");
     modalOverlay.addEventListener("click", closeModal);
   }
+}
+
+function onCardButtonClick() {
+  const list = document.querySelector("#list");
+  list.addEventListener("click", (e) => {
+    if (e.target.className === "card-btn") {
+      const cardContent = e.target.parentElement.parentElement;
+      const cardPrice = cardContent.children[0].innerHTML;
+      const cardTitle = cardContent.children[1].innerHTML;
+      let li = document.createElement("li");
+      li.innerHTML = `
+       <h3>${cardTitle}</h3>
+       <p>${cardPrice}</p>
+      `;
+      cart.push(li);
+      e.target.setAttribute("disabled", "disabled");
+      console.log(cart);
+    }
+  });
 }
