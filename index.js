@@ -213,13 +213,18 @@ function openCart() {
 }
 
 function closeModal() {
+  const body = document.body;
   const cartModal = document.querySelector(".modal");
   cartModal.classList.add("hide");
+  body.classList.remove("modal-open");
 }
 
 function seeModal() {
+  const body = document.body;
   const cartModal = document.querySelector(".modal");
   cartModal.classList.remove("hide");
+  body.classList.add("modal-open");
+
   if (!cartModal.classList.contains("hide")) {
     const modalOverlay = document.querySelector(".modal");
     modalOverlay.addEventListener("click", closeModal);
