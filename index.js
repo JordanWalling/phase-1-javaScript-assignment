@@ -246,8 +246,8 @@ function onCardButtonClick() {
       e.target.setAttribute("disabled", "disabled");
       e.target.style.backgroundColor = "grey";
       e.target.style.color = "white";
-      console.log(cart);
-      console.log(cartTotalPrice);
+      // console.log(cart);
+      // console.log(cartTotalPrice);
       displayCartItems();
     }
   });

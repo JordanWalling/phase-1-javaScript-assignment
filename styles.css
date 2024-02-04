@@ -64,6 +64,7 @@ nav {
 
 .cart-container {
   margin-right: 5px;
+  cursor: pointer;
 }
 
 .fa-cart-shopping {
@@ -188,6 +189,7 @@ img {
   width: 80%;
   min-height: 50%;
   max-height: 80%;
+  max-width: 700px;
   overflow-y: auto;
   background-color: #fff;
   position: relative;
@@ -202,8 +204,12 @@ img {
 
 .modal-content span {
   position: absolute;
-  top: 0;
-  left: 95%;
+  top: 2%;
+  left: 93%;
+}
+
+.modal-content span:hover {
+  cursor: pointer;
 }
 body.modal-open {
   overflow: hidden;
@@ -235,6 +241,10 @@ div.item-container button {
   }
   .cart-container {
     margin-right: 10px;
+  }
+  .modal-content span {
+    top: 4%;
+    left: 95%;
   }
 }
 
