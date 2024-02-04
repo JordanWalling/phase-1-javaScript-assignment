@@ -224,6 +224,9 @@ div.item-container button {
   left: 95%;
 }
 
+#cart-list h4 {
+  margin-top: 40px;
+}
 /* ====== END OF CART MODAL ======= */
 
 @media screen and (min-width: 560px) {

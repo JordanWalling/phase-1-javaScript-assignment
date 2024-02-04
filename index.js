@@ -1,6 +1,7 @@
 document.addEventListener("DOMContentLoaded", initialise);
 let allProducts;
 let cart = [];
+let cartTotalPrice = [];
 function initialise() {
   fetchProducts();
   filterCategories();
@@ -241,10 +242,12 @@ function onCardButtonClick() {
       const cardTitle = cardContent.querySelector(".card-title").textContent;
 
       cart.push({ title: cardTitle, price: cardPrice });
+      cartTotalPrice.push(Number(cardPrice.slice(1)));
       e.target.setAttribute("disabled", "disabled");
       e.target.style.backgroundColor = "grey";
       e.target.style.color = "white";
       console.log(cart);
+      console.log(cartTotalPrice);
       displayCartItems();
     }
   });
@@ -252,10 +255,14 @@ function onCardButtonClick() {
 
 function displayCartItems() {
   const cartList = document.querySelector("#cart-list");
+  let h4 = document.createElement("h4");
 
   cartList.innerHTML = "";
+  let cartTotal = 0;
+
   cart.map((item, index) => {
     const { price, title } = item;
+
     const li = document.createElement("li");
     const h3 = document.createElement("h3");
     const p = document.createElement("p");
@@ -280,6 +287,17 @@ function displayCartItems() {
     div.appendChild(p);
     div.appendChild(btn);
     li.appendChild(div);
+
     cartList.appendChild(li);
+
+    // cartTotalPrice.map((item) => {
+    //   cartTotal += item;
+    // });
+
+    cartTotal += Number(price.slice(1));
   });
+  h4.innerHTML = `Total: $${cartTotal}`;
+  cartList.appendChild(h4);
+
+  cartTotalPrice = [];
 }
