@@ -290,7 +290,9 @@ function shoppingCart() {
     sum += Number(numericValue.slice(index + 1));
   });
   cartTotal.innerHTML =
-    sum > 0 ? `Total price: $${sum}` : `No items in the cart`;
+    sum > 0
+      ? `<button id="checkout" onclick="checkout()">Pay Now: $${sum}</button>`
+      : `No items in the cart`;
 }
 
 function increment(id, event) {
@@ -316,6 +318,15 @@ function deleteCartItem(id, event) {
   shoppingCart();
   event.stopPropagation();
 }
+
+function checkout() {
+  const checkoutBtn = document.querySelector("#checkout");
+  const cartList = document.querySelector("#cart-list");
+  cart = [];
+  shoppingCart();
+  cartList.innerHTML = "Thank you for your purchase";
+}
+
 // function displayCartItems() {
 //  const cartList = document.querySelector("#cart-list");
 //  let h4 = document.createElement("h4");

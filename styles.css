@@ -233,6 +233,14 @@ div.item-container button {
 #cart-list h4 {
   margin-top: 40px;
 }
+
+#checkout {
+  background-color: green;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  border-radius: 4px;
+}
 /* ====== END OF CART MODAL ======= */
 
 @media screen and (min-width: 560px) {
