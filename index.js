@@ -34,7 +34,7 @@ function displayProducts(products) {
      <img src=${image} alt=${category} />
      </div>
      <div class="card-content">
-     <p class="card-price">$${Math.round(price)}</p>
+     <p class="card-price">$${price}</p>
      <h4 class="card-title">${title.substring(0, 45)}...</h4>
      <p class="card-desc hide">
      ${category.toUpperCase()}
@@ -116,7 +116,7 @@ function filterCategories() {
     <img src=${image} alt=${category} />
     </div>
     <div class="card-content">
-    <p class="card-price">$${Math.round(price)}</p>
+    <p class="card-price">$${price}</p>
     <h4 class="card-title">${title.substring(0, 45)}...</h4>
     <p class="card-desc hide">
     ${category.toUpperCase()}
@@ -169,7 +169,7 @@ function searchProduct() {
     <img src=${image} alt=${category} />
     </div>
     <div class="card-content">
-    <p class="card-price">$${Math.round(price)}</p>
+    <p class="card-price">$${price}</p>
     <h4 class="card-title">${title.substring(0, 45)}...</h4>
     <p class="card-desc hide">
     ${category.toUpperCase()}
@@ -217,15 +217,19 @@ function openCart() {
   cartBtn.addEventListener("click", () => {
     seeModal();
   });
-  const closeBtn = document.querySelector(".close");
-  closeBtn.addEventListener("click", () => {
-    closeModal();
-  });
 }
 
-function closeModal() {
+const closeBtn = document.querySelector(".fa-xmark");
+closeBtn.addEventListener("click", (e) => {
+  e.stopPropagation();
+  closeModal(e);
+});
+function closeModal(e) {
   const body = document.body;
   const cartModal = document.querySelector(".modal");
+  if (e.target.classList[0] === "modal-content") {
+    return;
+  }
   cartModal.classList.add("hide");
   body.classList.remove("modal-open");
 }
@@ -236,10 +240,10 @@ function seeModal() {
   cartModal.classList.remove("hide");
   body.classList.add("modal-open");
 
-  if (!cartModal.classList.contains("hide")) {
-    const modalOverlay = document.querySelector(".modal");
-    modalOverlay.addEventListener("click", closeModal);
-  }
+  // if (!cartModal.classList.contains("hide")) {
+  //   const modalOverlay = document.querySelector(".modal");
+  //   modalOverlay.addEventListener("click", closeModal);
+  // }
 }
 
 function addToCart(id) {
@@ -257,23 +261,36 @@ function addToCart(id) {
 
 function shoppingCart() {
   const cartList = document.querySelector("#cart-list");
+  const cartTotal = document.querySelector("#cart-total");
   let cartHTML = "";
+
   cart
     .map((product) => {
       const { title, price, quantity, id } = product;
       cartHTML += `
    <li id="${id}">
     <h3>${title}</h3>
-    <p>${price}</p>
-    <p>${quantity}</p>
+    <p>Price: $${price}</p>
+    <p>Quantity: ${quantity}</p>
     <button onclick="increment(${id}, event)">+</button>
     <button onclick="decrement(${id}, event)">-</button>
     <button onclick="deleteCartItem(${id}, event)">X</button>
+    <p id="item-total">Item total: $${price * quantity}</p>
    </li>
   `;
     })
     .join("");
   cartList.innerHTML = cartHTML;
+
+  const itemTotals = document.querySelectorAll("#item-total");
+  let sum = 0;
+  itemTotals.forEach((itemTotal) => {
+    const numericValue = itemTotal.innerHTML;
+    const index = numericValue.indexOf("$");
+    sum += Number(numericValue.slice(index + 1));
+  });
+  cartTotal.innerHTML =
+    sum > 0 ? `Total price: $${sum}` : `No items in the cart`;
 }
 
 function increment(id, event) {
