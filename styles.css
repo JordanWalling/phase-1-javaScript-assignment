@@ -328,7 +328,7 @@ div.item-container button {
     grid-template-columns: repeat(3, 1fr);
   }
   .cart-container {
-    margin-right: 10px;
+    margin-right: 25px;
   }
   .modal-content span {
     top: 4%;
@@ -362,6 +362,9 @@ div.item-container button {
   }
   .button-quantity-container {
     width: 50%;
+  }
+  .select-container {
+    justify-content: center;
   }
 }
 @media screen and (min-width: 1000px) {
