@@ -12,54 +12,43 @@ function initialise() {
 }
 
 async function fetchProducts() {
-  const resp = await fetch("https://fakestoreapi.com/products");
-  const data = await resp.json();
-  allProducts = data;
-  displayProducts(allProducts);
+  try {
+    // fetch products from fake store api
+    const resp = await fetch("https://fakestoreapi.com/products");
+    const data = await resp.json();
+    // allProducts variable saved as data response
+    allProducts = data;
+    displayProducts(allProducts);
+  } catch (error) {
+    console.error(error);
+  }
 }
 
+// displayProducts iterates through allProducts variable
 function displayProducts(products) {
+  // select element to put the list inside of
   const list = document.querySelector("#list");
   products
     .map((product) => {
-      // console.log(product);
       const { image, category, price, title, id } = product;
-      list.innerHTML +=
-        // const li = document.createElement("li");
-        // li.classList.add("card");
-        `
+      // add each item inside the list ul
+      list.innerHTML += `
      <li class="card">
-     
-     <div class="img-content">
-     <img src=${image} alt=${category} />
-     </div>
-     <div class="card-content">
-     <p class="card-price">$${price}</p>
-     <h4 class="card-title">${title.substring(0, 45)}...</h4>
-     <p class="card-desc hide">
-     ${category.toUpperCase()}
-     </p> 
-     <div class="btn-container">
-     <button class="card-btn" onclick="addToCart(${id})">Add to Cart</button>
-     </div>
+      <div class="img-content">
+       <img src=${image} alt=${category} />
+      </div>
+      <div class="card-content">
+       <p class="card-price">$${price.toFixed(2)}</p>
+       <h4 class="card-title">${title.substring(0, 45)}...</h4>
+       <p class="card-desc hide">
+      ${category.toUpperCase()}
+      </p> 
+      <div class="btn-container">
+       <button class="card-btn" onclick="addToCart(${id})">Add to Cart</button>
+      </div>
      </li>
      
     `;
-      // li.addEventListener("mouseenter", (e) => {
-      //   let cardContent = e.target.children[1];
-      //   const btnContainer = cardContent.children[3];
-      //   const btn = btnContainer.children[0];
-
-      //   btn.classList.remove("hide");
-      // });
-      // li.addEventListener("mouseleave", (e) => {
-      //   let cardContent = e.target.children[1];
-      //   const btnContainer = cardContent.children[3];
-      //   const btn = btnContainer.children[0];
-      //   btn.classList.add("hide");
-      // });
-
-      // list.appendChild(li);
     })
     .join("");
 }
@@ -72,12 +61,17 @@ function filterCategories() {
 
   // 3 - create filter function
   function filterProducts(e) {
+    // select element to put filtered list inside of
     let list = document.querySelector("#list");
+    // create variable that will be the filtered html depending on value
     let content;
+    // create variable to use for switch case - need to know the select value
     let option = e.target.value;
 
+    // clear existing list
     list.innerHTML = "";
 
+    // if option equal to one of the cases, content is equal to the filtered option
     switch (option) {
       case "all":
         content = allProducts;
@@ -105,7 +99,7 @@ function filterCategories() {
       default:
         content = allProducts;
     }
-    // 4- create li element for each product
+    // content then iterated over and displayed inside list
     content
       .map((product) => {
         const { image, category, price, title, id } = product;
@@ -127,20 +121,6 @@ function filterCategories() {
     </li>
     
    `;
-        // li.addEventListener("mouseenter", (e) => {
-        //   let cardContent = e.target.children[1];
-        //   const btnContainer = cardContent.children[3];
-        //   const btn = btnContainer.children[0];
-        //   btn.classList.remove("hide");
-        // });
-        // li.addEventListener("mouseleave", (e) => {
-        //   let cardContent = e.target.children[1];
-        //   const btnContainer = cardContent.children[3];
-        //   const btn = btnContainer.children[0];
-        //   btn.classList.add("hide");
-        // });
-        // // 5 - append to #list
-        // list.appendChild(li);
       })
       .join("");
   }
@@ -169,7 +149,7 @@ function searchProduct() {
     <img src=${image} alt=${category} />
     </div>
     <div class="card-content">
-    <p class="card-price">$${price}</p>
+    <p class="card-price">$${price.toFixed(2)}</p>
     <h4 class="card-title">${title.substring(0, 45)}...</h4>
     <p class="card-desc hide">
     ${category.toUpperCase()}
@@ -180,29 +160,17 @@ function searchProduct() {
     </li>
     
    `;
-        // li.addEventListener("mouseenter", (e) => {
-        //   let cardContent = e.target.children[1];
-        //   const btnContainer = cardContent.children[3];
-        //   const btn = btnContainer.children[0];
-        //   btn.classList.remove("hide");
-        // });
-        // li.addEventListener("mouseleave", (e) => {
-        //   let cardContent = e.target.children[1];
-        //   const btnContainer = cardContent.children[3];
-        //   const btn = btnContainer.children[0];
-        //   btn.classList.add("hide");
-        // });
-        // // 5 - append to #list
-        // list.appendChild(li);
       })
       .join("");
   });
 }
 
+// on window scroll, add sticky navbar and change navbar color
 function navScroll() {
   const nav = document.querySelector("nav");
   window.addEventListener("scroll", () => {
     const scrollPosition = window.scrollY;
+    // toggle on/off depending on scroll position
     if (scrollPosition > 20) {
       nav.classList.add("scrolled");
     } else {
@@ -219,14 +187,26 @@ function openCart() {
   });
 }
 
+// see modal function
+function seeModal() {
+  const body = document.body;
+  const cartModal = document.querySelector(".modal");
+  cartModal.classList.remove("hide");
+  body.classList.add("modal-open");
+}
+
+// close modal button
 const closeBtn = document.querySelector(".fa-xmark");
 closeBtn.addEventListener("click", (e) => {
   e.stopPropagation();
   closeModal(e);
 });
+
+// close modal function
 function closeModal(e) {
   const body = document.body;
   const cartModal = document.querySelector(".modal");
+  // stop modal closing
   if (e.target.classList[0] === "modal-content") {
     return;
   }
@@ -234,36 +214,32 @@ function closeModal(e) {
   body.classList.remove("modal-open");
 }
 
-function seeModal() {
-  const body = document.body;
-  const cartModal = document.querySelector(".modal");
-  cartModal.classList.remove("hide");
-  body.classList.add("modal-open");
-
-  // if (!cartModal.classList.contains("hide")) {
-  //   const modalOverlay = document.querySelector(".modal");
-  //   modalOverlay.addEventListener("click", closeModal);
-  // }
-}
-
+// function adds product to cart
 function addToCart(id) {
+  // find it product is in cart
   const searchCart = cart.find((product) => product.id === id);
+  // disallows duplicate items to be put in cart
   if (searchCart) {
     alert("Product already added to the cart");
   } else {
+    // if no product with same id in cart, add to cart
     const oldProduct = allProducts.find((product) => product.id === id);
-    // const { title, price, id } = oldProduct;
+    // push product to cart, along with quantity of 1, to increase/decrease number later in cart
     cart.push({ ...oldProduct, quantity: 1 });
   }
-  console.log(cart);
+  // console.log(cart);
+
+  // update shopping cart to show new product
   shoppingCart();
 }
 
+// function to show updated cart
 function shoppingCart() {
   const cartList = document.querySelector("#cart-list");
   const cartTotal = document.querySelector("#cart-total");
   let cartHTML = "";
 
+  // map through cart, display cart contents
   cart
     .map((product) => {
       const { title, price, quantity, id } = product;
@@ -273,40 +249,35 @@ function shoppingCart() {
       <h3>${title.substring(0, 30)}...</h3>
     </div>
     <div class="cart-quantity-container">
-     <div class="quantity-item">
-      <p class="cart-price">$${price}</p>
-     </div>
-     <div class="quantity-item">
+     <p class="cart-price">$${price.toFixed(2)}</p>
+     <div class="button-quantity-container">
       <button class="plus" onclick="increment(${id}, event)">+</button>
-     </div>
-     <div class="quantity-item">
       <p>${quantity}</p>
-     </div>
-     <div class="quantity-item">
       <button class="minus" onclick="decrement(${id}, event)">-</button>
-     </div>
-     <div>
+      </div>
       <p id="item-total">$${(price * quantity).toFixed(2)}</p>
+     <div class="remove-cart-item">
+       <button onclick="deleteCartItem(${id}, event)">X</button>
      </div>
     </div>
-    <div class="remove-cart-item">
-      <button onclick="deleteCartItem(${id}, event)">X</button>
-    </div>
-    </div>
-   
    </li>
   `;
     })
     .join("");
   cartList.innerHTML = cartHTML;
 
+  // select the total amount (quantity * price) of each item
   const itemTotals = document.querySelectorAll("#item-total");
   let sum = 0;
+  // iterate over all the items total price
   itemTotals.forEach((itemTotal) => {
     const numericValue = itemTotal.innerHTML;
+    // find where the price starts and cut the rest
     const index = numericValue.indexOf("$");
+    // turn into a number value
     sum += Number(numericValue.slice(index + 1));
   });
+  // display depending on if the cart is empty or not
   cartTotal.innerHTML =
     sum > 0
       ? `<button id="checkout" onclick="checkout()">Pay Now: $${sum.toFixed(
@@ -315,414 +286,44 @@ function shoppingCart() {
       : `No items in the cart`;
 }
 
+// function to add quantity to product in cart
 function increment(id, event) {
   const cartProduct = cart.find((product) => product.id === id);
+  // increase product quantity
   if (cartProduct) {
     cartProduct.quantity++;
   }
+  // update cart after product quantity increment
   shoppingCart();
   event.stopPropagation();
 }
+
+// function to minus quantity from the product in the cart
 function decrement(id, event) {
   const cartProduct = cart.find((product) => product.id === id);
+  // if quantity number higher than 1, decrement quantity
   if (cartProduct && cartProduct.quantity > 1) {
     cartProduct.quantity--;
   }
+  // update cart
   shoppingCart();
   event.stopPropagation();
 }
 
+// function to find a product in the cart by id and remove
 function deleteCartItem(id, event) {
   cart = cart.filter((product) => product.id !== id);
 
+  // update cart
   shoppingCart();
   event.stopPropagation();
 }
 
+// function to leave purchase message and empty cart contents
 function checkout() {
-  const checkoutBtn = document.querySelector("#checkout");
+  // const checkoutBtn = document.querySelector("#checkout");
   const cartList = document.querySelector("#cart-list");
   cart = [];
   shoppingCart();
   cartList.innerHTML = "Thank you for your purchase";
 }
-
-// function displayCartItems() {
-//  const cartList = document.querySelector("#cart-list");
-//  let h4 = document.createElement("h4");
-
-//  cartList.innerHTML = "";
-//  let cartTotal = 0;
-
-//  cart.map((item, index) => {
-//   const { price, title } = item;
-
-//   const li = document.createElement("li");
-//   const h3 = document.createElement("h3");
-//   const p = document.createElement("p");
-//   const p1 = document.createElement("p");
-//   const btn = document.createElement("button");
-//   const div = document.createElement("div");
-//   div.classList.add("item-container");
-
-//   p1.textContent = index + 1;
-//   h3.textContent = title;
-//   p.textContent = price;
-//   btn.textContent = "X";
-//   btn.addEventListener("click", (e) => {
-//    // stopPropagation prevents modal from closing
-//    e.stopPropagation();
-//    cart.splice(index, 1);
-
-//    displayCartItems();
-//   });
-//   div.appendChild(p1);
-//   div.appendChild(h3);
-//   div.appendChild(p);
-//   div.appendChild(btn);
-//   li.appendChild(div);
-
-//   cartList.appendChild(li);
-
-//   // cartTotalPrice.map((item) => {
-//    //   cartTotal += item;
-//    // });
-
-//    cartTotal += Number(price.slice(1));
-//   });
-//   h4.innerHTML = `Total: $${cartTotal}`;
-//   cartList.appendChild(h4);
-
-//   cartTotalPrice = [];
-//  }
-
-// function onCardButtonClick() {
-//   const list = document.querySelector("#list");
-//   list.addEventListener("click", (e) => {
-//     if (e.target.className === "card-btn") {
-//       const cardContent = e.target.parentElement.parentElement;
-
-//       const cardPrice = cardContent.querySelector(".card-price").textContent;
-//       const cardTitle = cardContent.querySelector(".card-title").textContent;
-
-//       cart.push({ title: cardTitle, price: cardPrice });
-//       cartTotalPrice.push(Number(cardPrice.slice(1)));
-//       e.target.setAttribute("disabled", "disabled");
-//       e.target.style.backgroundColor = "grey";
-//       e.target.style.color = "white";
-//       // console.log(cart);
-//       // console.log(cartTotalPrice);
-//       displayCartItems();
-//     }
-//   });
-// }
-
-// ============================================================
-
-//                          OLD CODE
-
-// ============================================================
-
-// document.addEventListener("DOMContentLoaded", initialise);
-// let allProducts;
-// let cart = [];
-// let cartTotalPrice = [];
-// function initialise() {
-//   fetchProducts();
-//   filterCategories();
-//   searchProduct();
-//   navScroll();
-//   openCart();
-//   onCardButtonClick();
-//   displayCartItems();
-// }
-
-// async function fetchProducts() {
-//   const resp = await fetch("https://fakestoreapi.com/products");
-//   const data = await resp.json();
-//   allProducts = data;
-//   displayProducts(allProducts);
-// }
-
-// function displayProducts(products) {
-//   const list = document.querySelector("#list");
-//   products
-//     .map((product) => {
-//       // console.log(product);
-//       const { image, category, price, title } = product;
-//       const li = document.createElement("li");
-//       li.classList.add("card");
-//       li.innerHTML = `
-
-//     <div class="img-content">
-//       <img src=${image} alt=${category} />
-//     </div>
-//     <div class="card-content">
-//       <p class="card-price">$${Math.round(price)}</p>
-//       <h4 class="card-title">${title.substring(0, 45)}...</h4>
-//       <p class="card-desc hide">
-//         ${category.toUpperCase()}
-//       </p>
-//       <div class="btn-container">
-//        <button class="card-btn hide">Add to Cart</button>
-//       </div>
-
-//     `;
-//       li.addEventListener("mouseenter", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-
-//         btn.classList.remove("hide");
-//       });
-//       li.addEventListener("mouseleave", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-//         btn.classList.add("hide");
-//       });
-
-//       list.appendChild(li);
-//     })
-//     .join("");
-// }
-
-// function filterCategories() {
-//   // 1 - select the select element
-//   const select = document.querySelector("#filter-btn");
-//   // 2 - add onchange event listener
-//   select.addEventListener("change", filterProducts);
-
-//   // 3 - create filter function
-//   function filterProducts(e) {
-//     let list = document.querySelector("#list");
-//     let content;
-//     let option = e.target.value;
-
-//     list.innerHTML = "";
-
-//     switch (option) {
-//       case "all":
-//         content = allProducts;
-//         break;
-//       case "men":
-//         content = allProducts.filter((product) => {
-//           return product.category === "men's clothing";
-//         });
-//         break;
-//       case "women":
-//         content = allProducts.filter((product) => {
-//           return product.category === "women's clothing";
-//         });
-//         break;
-//       case "jewellery":
-//         content = allProducts.filter((product) => {
-//           return product.category === "jewelery";
-//         });
-//         break;
-//       case "electronics":
-//         content = allProducts.filter((product) => {
-//           return product.category === "electronics";
-//         });
-//         break;
-//       default:
-//         content = allProducts;
-//     }
-//     // 4- create li element for each product
-//     content.map((product) => {
-//       const { image, price, category, title } = product;
-//       const li = document.createElement("li");
-//       li.classList.add("card");
-//       li.innerHTML = `
-//          <div class="img-content">
-//          <img src=${image} alt=${category} />
-//          </div>
-//          <div class="card-content">
-//          <p class="card-price">$${Math.round(price)}</p>
-//          <h4 class="card-title">${title.substring(0, 45)}...</h4>
-//          <p class="card-desc hide">
-//          ${category.toUpperCase()}
-//          </p>
-//          <div class="btn-container">
-//          <button class="card-btn hide">Add to Cart</button>
-//          </div>
-//          `;
-//       li.addEventListener("mouseenter", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-//         btn.classList.remove("hide");
-//       });
-//       li.addEventListener("mouseleave", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-//         btn.classList.add("hide");
-//       });
-//       // 5 - append to #list
-//       list.appendChild(li);
-//     });
-//   }
-// }
-
-// function searchProduct() {
-//   // 1. Select element
-//   const searchInput = document.querySelector("#search-input");
-//   const list = document.querySelector("#list");
-//   // 2. add event listener
-//   searchInput.addEventListener("keyup", (e) => {
-//     list.innerHTML = "";
-//     // 3. get value from input
-//     let searchTerm = e.target.value;
-//     // 4. filter products array and return filtered products
-//     let content = allProducts.filter((product) => {
-//       return product.title.toLowerCase().includes(searchTerm);
-//     });
-//     content.map((product) => {
-//       const { image, price, category, title } = product;
-//       const li = document.createElement("li");
-//       li.classList.add("card");
-//       li.innerHTML = `
-//         <div class="img-content">
-//         <img src=${image} alt=${category} />
-//         </div>
-//         <div class="card-content">
-//         <p class="card-price">$${Math.round(price)}</p>
-//         <h4 class="card-title">${title.substring(0, 45)}...</h4>
-//         <p class="card-desc hide">
-//         ${category.toUpperCase()}
-//         </p>
-//         <div class="btn-container">
-//         <button class="card-btn hide">Add to Cart</button>
-//         </div>
-//         `;
-//       li.addEventListener("mouseenter", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-//         btn.classList.remove("hide");
-//       });
-//       li.addEventListener("mouseleave", (e) => {
-//         let cardContent = e.target.children[1];
-//         const btnContainer = cardContent.children[3];
-//         const btn = btnContainer.children[0];
-//         btn.classList.add("hide");
-//       });
-//       // 5 - append to #list
-//       list.appendChild(li);
-//     });
-//   });
-// }
-
-// function navScroll() {
-//   const nav = document.querySelector("nav");
-//   window.addEventListener("scroll", () => {
-//     const scrollPosition = window.scrollY;
-//     if (scrollPosition > 20) {
-//       nav.classList.add("scrolled");
-//     } else {
-//       nav.classList.remove("scrolled");
-//     }
-//   });
-// }
-
-// function openCart() {
-//   const cartBtn = document.querySelector(".cart-container");
-
-//   cartBtn.addEventListener("click", () => {
-//     seeModal();
-//   });
-//   const closeBtn = document.querySelector(".close");
-//   closeBtn.addEventListener("click", () => {
-//     closeModal();
-//   });
-// }
-
-// function closeModal() {
-//   const body = document.body;
-//   const cartModal = document.querySelector(".modal");
-//   cartModal.classList.add("hide");
-//   body.classList.remove("modal-open");
-// }
-
-// function seeModal() {
-//   const body = document.body;
-//   const cartModal = document.querySelector(".modal");
-//   cartModal.classList.remove("hide");
-//   body.classList.add("modal-open");
-
-//   if (!cartModal.classList.contains("hide")) {
-//     const modalOverlay = document.querySelector(".modal");
-//     modalOverlay.addEventListener("click", closeModal);
-//   }
-// }
-
-// function onCardButtonClick() {
-//   const list = document.querySelector("#list");
-//   list.addEventListener("click", (e) => {
-//     if (e.target.className === "card-btn") {
-//       const cardContent = e.target.parentElement.parentElement;
-
-//       const cardPrice = cardContent.querySelector(".card-price").textContent;
-//       const cardTitle = cardContent.querySelector(".card-title").textContent;
-
-//       cart.push({ title: cardTitle, price: cardPrice });
-//       cartTotalPrice.push(Number(cardPrice.slice(1)));
-//       e.target.setAttribute("disabled", "disabled");
-//       e.target.style.backgroundColor = "grey";
-//       e.target.style.color = "white";
-//       // console.log(cart);
-//       // console.log(cartTotalPrice);
-//       displayCartItems();
-//     }
-//   });
-// }
-
-// function displayCartItems() {
-//   const cartList = document.querySelector("#cart-list");
-//   let h4 = document.createElement("h4");
-
-//   cartList.innerHTML = "";
-//   let cartTotal = 0;
-
-//   cart.map((item, index) => {
-//     const { price, title } = item;
-
-//     const li = document.createElement("li");
-//     const h3 = document.createElement("h3");
-//     const p = document.createElement("p");
-//     const p1 = document.createElement("p");
-//     const btn = document.createElement("button");
-//     const div = document.createElement("div");
-//     div.classList.add("item-container");
-
-//     p1.textContent = index + 1;
-//     h3.textContent = title;
-//     p.textContent = price;
-//     btn.textContent = "X";
-//     btn.addEventListener("click", (e) => {
-//       // stopPropagation prevents modal from closing
-//       e.stopPropagation();
-//       cart.splice(index, 1);
-
-//       displayCartItems();
-//     });
-//     div.appendChild(p1);
-//     div.appendChild(h3);
-//     div.appendChild(p);
-//     div.appendChild(btn);
-//     li.appendChild(div);
-
-//     cartList.appendChild(li);
-
-//     // cartTotalPrice.map((item) => {
-//     //   cartTotal += item;
-//     // });
-
-//     cartTotal += Number(price.slice(1));
-//   });
-//   h4.innerHTML = `Total: $${cartTotal}`;
-//   cartList.appendChild(h4);
-
-//   cartTotalPrice = [];
-// }

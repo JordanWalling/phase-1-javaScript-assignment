@@ -200,6 +200,7 @@ img {
   text-align: center;
   font-size: 26px;
   margin: 20px auto;
+  text-transform: uppercase;
 }
 
 .modal-content span {
@@ -234,6 +235,13 @@ div.item-container button {
   margin-top: 40px;
 }
 
+#cart-total {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 30px;
+}
+
 #checkout {
   background-color: green;
   color: white;
@@ -241,7 +249,8 @@ div.item-container button {
   padding: 5px 10px;
   border-radius: 4px;
   cursor: pointer;
-  margin: 0 auto;
+  width: 60%;
+  text-transform: uppercase;
 }
 
 #item-container {
@@ -251,10 +260,17 @@ div.item-container button {
   position: relative;
 }
 
-.cart-quantity-container {
+.button-quantity-container {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  width: 65px;
+}
+
+.cart-quantity-container {
+  display: grid;
+  grid-template-columns: 2fr 1fr 2fr;
+  place-items: center;
 }
 
 .cart-title h3 {
@@ -302,6 +318,7 @@ div.item-container button {
 
 #item-total {
   font-weight: bold;
+  text-align: center;
 }
 /* ====== END OF CART MODAL ======= */
 
@@ -327,6 +344,18 @@ div.item-container button {
   .card {
     width: 166px;
   }
+  .cart-price {
+    font-size: 16px;
+  }
+  .cart-title h3 {
+    font-size: 18px;
+  }
+  .remove-cart-item {
+    left: 96%;
+  }
+  .modal-content h2 {
+    font-size: 30px;
+  }
 }
 @media screen and (min-width: 1000px) {
   #list {
@@ -348,13 +377,8 @@ div.item-container button {
 
 /* hide class  */
 .hide {
-  /* display: hidden; */
   display: none;
 }
 #hide {
   display: none;
 }
-/* add class when moueover - js */
-/* .card:hover .hide {
- display: block;
-} */
