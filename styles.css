@@ -334,6 +334,9 @@ div.item-container button {
     top: 4%;
     left: 95%;
   }
+  .fa-magnifying-glass {
+    left: 94%;
+  }
 }
 
 @media screen and (min-width: 730px) {
