@@ -134,7 +134,7 @@ function searchProduct() {
   searchInput.addEventListener("keyup", (e) => {
     list.innerHTML = "";
     // 3. get value from input
-    let searchTerm = e.target.value;
+    let searchTerm = e.target.value.toLowerCase();
     // 4. filter products array and return filtered products
     let content = allProducts.filter((product) => {
       return product.title.toLowerCase().includes(searchTerm);
