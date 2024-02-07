@@ -268,14 +268,32 @@ function shoppingCart() {
     .map((product) => {
       const { title, price, quantity, id } = product;
       cartHTML += `
-   <li id="${id}">
-    <h3>${title}</h3>
-    <p>Price: $${price}</p>
-    <p>Quantity: ${quantity}</p>
-    <button onclick="increment(${id}, event)">+</button>
-    <button onclick="decrement(${id}, event)">-</button>
-    <button onclick="deleteCartItem(${id}, event)">X</button>
-    <p id="item-total">Item total: $${price * quantity}</p>
+   <li id="item-container">
+    <div class="cart-title">
+      <h3>${title.substring(0, 30)}...</h3>
+    </div>
+    <div class="cart-quantity-container">
+     <div class="quantity-item">
+      <p class="cart-price">$${price}</p>
+     </div>
+     <div class="quantity-item">
+      <button class="plus" onclick="increment(${id}, event)">+</button>
+     </div>
+     <div class="quantity-item">
+      <p>${quantity}</p>
+     </div>
+     <div class="quantity-item">
+      <button class="minus" onclick="decrement(${id}, event)">-</button>
+     </div>
+     <div>
+      <p id="item-total">$${(price * quantity).toFixed(2)}</p>
+     </div>
+    </div>
+    <div class="remove-cart-item">
+      <button onclick="deleteCartItem(${id}, event)">X</button>
+    </div>
+    </div>
+   
    </li>
   `;
     })
@@ -291,7 +309,9 @@ function shoppingCart() {
   });
   cartTotal.innerHTML =
     sum > 0
-      ? `<button id="checkout" onclick="checkout()">Pay Now: $${sum}</button>`
+      ? `<button id="checkout" onclick="checkout()">Pay Now: $${sum.toFixed(
+          2
+        )}</button>`
       : `No items in the cart`;
 }
 
