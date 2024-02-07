@@ -237,6 +237,7 @@ function addToCart(id) {
 function shoppingCart() {
   const cartList = document.querySelector("#cart-list");
   const cartTotal = document.querySelector("#cart-total");
+  const cartNumber = document.querySelector(".cart-number-container");
   let cartHTML = "";
 
   // map through cart, display cart contents
@@ -284,6 +285,18 @@ function shoppingCart() {
           2
         )}</button>`
       : `No items in the cart`;
+
+  let newSum = 0;
+  cart.map((product) => {
+    newSum += product.quantity;
+  });
+
+  if (newSum < 1) {
+    cartNumber.classList.add("hide");
+  } else {
+    cartNumber.classList.remove("hide");
+    cartNumber.innerHTML = newSum;
+  }
 }
 
 // function to add quantity to product in cart
