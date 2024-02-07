@@ -267,6 +267,17 @@ div.item-container button {
   margin-bottom: 20px;
 }
 
+.checkout-message {
+  text-align: center;
+  text-transform: uppercase;
+  background-color: green;
+  color: white;
+  width: 80%;
+  border-radius: 5px;
+  margin: 0 auto;
+  padding: 2px;
+}
+
 #item-container {
   display: flex;
   flex-direction: column;

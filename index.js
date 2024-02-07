@@ -338,5 +338,5 @@ function checkout() {
   const cartList = document.querySelector("#cart-list");
   cart = [];
   shoppingCart();
-  cartList.innerHTML = "Thank you for your purchase";
+  cartList.innerHTML = `<p class="checkout-message">Thank you for your purchase</p>`;
 }
