@@ -393,6 +393,13 @@ div.item-container button {
   .select-container {
     justify-content: center;
   }
+  .fa-cart-shopping {
+    color: hsl(0, 0%, 60%);
+    font-size: 20px;
+  }
+  .cart-number-container {
+    left: 93%;
+  }
 }
 @media screen and (min-width: 1000px) {
   #list {
