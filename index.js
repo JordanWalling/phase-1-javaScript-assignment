@@ -8,6 +8,7 @@ function initialise() {
   searchProduct();
   navScroll();
   openCart();
+  closeCart();
   shoppingCart();
 }
 
@@ -182,9 +183,7 @@ function navScroll() {
 function openCart() {
   const cartBtn = document.querySelector(".cart-container");
 
-  cartBtn.addEventListener("click", () => {
-    seeModal();
-  });
+  cartBtn.addEventListener("click", seeModal);
 }
 
 // see modal function
@@ -195,21 +194,17 @@ function seeModal() {
   body.classList.add("modal-open");
 }
 
-// close modal button
-const closeBtn = document.querySelector(".fa-xmark");
-closeBtn.addEventListener("click", (e) => {
-  e.stopPropagation();
-  closeModal(e);
-});
+// close cart function
+function closeCart() {
+  const closeBtn = document.querySelector(".fa-xmark");
+  closeBtn.addEventListener("click", closeModal);
+}
 
 // close modal function
-function closeModal(e) {
+function closeModal() {
   const body = document.body;
   const cartModal = document.querySelector(".modal");
-  // stop modal closing
-  if (e.target.classList[0] === "modal-content") {
-    return;
-  }
+
   cartModal.classList.add("hide");
   body.classList.remove("modal-open");
 }
@@ -252,13 +247,13 @@ function shoppingCart() {
     <div class="cart-quantity-container">
      <p class="cart-price">$${price.toFixed(2)}</p>
      <div class="button-quantity-container">
-      <button class="plus" onclick="increment(${id}, event)">+</button>
+      <button class="plus" onclick="increment(${id})">+</button>
       <p>${quantity}</p>
-      <button class="minus" onclick="decrement(${id}, event)">-</button>
+      <button class="minus" onclick="decrement(${id})">-</button>
       </div>
       <p id="item-total">$${(price * quantity).toFixed(2)}</p>
      <div class="remove-cart-item">
-       <button onclick="deleteCartItem(${id}, event)">X</button>
+       <button onclick="deleteCartItem(${id})">X</button>
      </div>
     </div>
    </li>
@@ -300,7 +295,7 @@ function shoppingCart() {
 }
 
 // function to add quantity to product in cart
-function increment(id, event) {
+function increment(id) {
   const cartProduct = cart.find((product) => product.id === id);
   // increase product quantity
   if (cartProduct) {
@@ -308,11 +303,10 @@ function increment(id, event) {
   }
   // update cart after product quantity increment
   shoppingCart();
-  event.stopPropagation();
 }
 
 // function to minus quantity from the product in the cart
-function decrement(id, event) {
+function decrement(id) {
   const cartProduct = cart.find((product) => product.id === id);
   // if quantity number higher than 1, decrement quantity
   if (cartProduct && cartProduct.quantity > 1) {
@@ -320,16 +314,14 @@ function decrement(id, event) {
   }
   // update cart
   shoppingCart();
-  event.stopPropagation();
 }
 
 // function to find a product in the cart by id and remove
-function deleteCartItem(id, event) {
+function deleteCartItem(id) {
   cart = cart.filter((product) => product.id !== id);
 
   // update cart
   shoppingCart();
-  event.stopPropagation();
 }
 
 // function to leave purchase message and empty cart contents
