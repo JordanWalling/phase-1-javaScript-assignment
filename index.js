@@ -140,29 +140,34 @@ function searchProduct() {
     let content = allProducts.filter((product) => {
       return product.title.toLowerCase().includes(searchTerm);
     });
-    content
-      .map((product) => {
-        const { image, price, category, title, id } = product;
-        list.innerHTML += `
-    <li class="card">
-    
-    <div class="img-content">
-    <img src=${image} alt=${category} />
-    </div>
-    <div class="card-content">
-    <p class="card-price">$${price.toFixed(2)}</p>
-    <h4 class="card-title">${title.substring(0, 45)}...</h4>
-    <p class="card-desc hide">
-    ${category.toUpperCase()}
-    </p> 
-    <div class="btn-container">
-    <button class="card-btn" onclick="addToCart(${id})">Add to Cart</button>
-    </div>
-    </li>
-    
-   `;
-      })
-      .join("");
+
+    if (content.length > 0) {
+      content
+        .map((product) => {
+          const { image, price, category, title, id } = product;
+          list.innerHTML += `
+            <li class="card">
+            
+            <div class="img-content">
+            <img src=${image} alt=${category} />
+            </div>
+            <div class="card-content">
+            <p class="card-price">$${price.toFixed(2)}</p>
+            <h4 class="card-title">${title.substring(0, 45)}...</h4>
+            <p class="card-desc hide">
+            ${category.toUpperCase()}
+            </p> 
+            <div class="btn-container">
+            <button class="card-btn" onclick="addToCart(${id})">Add to Cart</button>
+            </div>
+            </li>
+            
+            `;
+        })
+        .join("");
+    } else {
+      list.innerHTML = `<p>No product found</p>`;
+    }
   });
 }
 
@@ -211,7 +216,7 @@ function closeModal() {
 
 // function adds product to cart
 function addToCart(id) {
-  // find it product is in cart
+  // find if product is in cart
   const searchCart = cart.find((product) => product.id === id);
   // disallows duplicate items to be put in cart
   if (searchCart) {
