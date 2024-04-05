@@ -37,6 +37,8 @@ Hi and welcome to this E-commerce application using JavaScript. This web applica
    ```
       open index.html
    ```
+
+**Project Walkthrough with Medium** - [e-commerce](https://medium.com/@jordanwalling1991/creating-an-e-commerce-application-with-javascript-601a9c94068d)
    
 ## Big Thank you
 
