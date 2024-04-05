@@ -26,6 +26,18 @@ Hi and welcome to this E-commerce application using JavaScript. This web applica
 
 7. Display message on "purchase"
 
+## Installation
+
+1. Inside your project directory, in your terminal enter:
+   ```
+      git clone git@github.com:JordanWalling/phase-1-javaScript-assignment.git
+   ```
+
+2. Inside the project folder, run:
+   ```
+      open index.html
+   ```
+   
 ## Big Thank you
 
 ---
